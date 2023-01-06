@@ -20,10 +20,10 @@ class HomeScreen extends StatelessWidget {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => CreateProductScreen()));
+                        builder: (context) => const CreateProductScreen()));
               },
-              title: Text('Create'),
-              trailing: Icon(Icons.add),
+              title: const Text('Create'),
+              trailing: const Icon(Icons.add),
             ),
           ],
         ),
