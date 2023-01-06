@@ -1,4 +1,5 @@
 import 'dart:developer';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class Authentication {
@@ -32,5 +33,15 @@ class Authentication {
         log('Wrong password provided for that user.');
       }
     }
+  }
+
+  Future<void> addData(
+      String title, String description, String quantity, String price) async {
+    await FirebaseFirestore.instance.collection('collection').add({
+      'title': title,
+      'description': description,
+      'quantity': quantity,
+      'price': price,
+    });
   }
 }

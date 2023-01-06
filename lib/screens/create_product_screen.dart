@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:inventory_management/screens/home_screen.dart';
+import 'package:inventory_management/services/auth_service.dart';
 
 class CreateProductScreen extends StatefulWidget {
   const CreateProductScreen({Key? key}) : super(key: key);
@@ -16,12 +17,14 @@ class _CreateProductScreenState extends State<CreateProductScreen> {
   TextEditingController descriptionController = TextEditingController();
   TextEditingController quantityController = TextEditingController();
   TextEditingController priceController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     final double screenHeight = MediaQuery.of(context).size.height;
     final double screenWidth = MediaQuery.of(context).size.width;
 
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: SafeArea(
         child: Center(
           child: Column(
@@ -89,6 +92,12 @@ class _CreateProductScreenState extends State<CreateProductScreen> {
               SizedBox(height: screenHeight * 0.04),
               ElevatedButton(
                 onPressed: () {
+                  Authentication().addData(
+                    titleController.text,
+                    descriptionController.text,
+                    quantityController.text,
+                    priceController.text,
+                  );
                   Navigator.push(
                     context,
                     MaterialPageRoute(
@@ -108,10 +117,12 @@ class _CreateProductScreenState extends State<CreateProductScreen> {
   getImage() async {
     final picker = ImagePicker();
     final pickedImage = await picker.pickImage(source: ImageSource.gallery);
-    setState(() {
-      if (pickedImage != null) {
-        File image = File(pickedImage.path);
-      }
-    });
+    setState(
+      () {
+        if (pickedImage != null) {
+          File image = File(pickedImage.path);
+        }
+      },
+    );
   }
 }
